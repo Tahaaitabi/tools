@@ -39,7 +39,7 @@ function hash_check {
 
     if [ "$new_hash" != "$old_hash" ]; then 
       ff_clear_cache
-      init_check  # Update the hash after clearing the cache
+      init_check  
     fi
   done
 }
