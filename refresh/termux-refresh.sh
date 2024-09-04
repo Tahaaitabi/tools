@@ -31,7 +31,7 @@ function init_check {
 
 function hash_check {
   while true; do 
-    sleep 1  # Add a delay between checks to prevent high CPU usage
+    sleep 0.3 # Add a delay between checks to prevent high CPU usage
     ls -lahR > $PREFIX/tmp/refresh/contents 
     new_hash=$(md5sum $PREFIX/tmp/refresh/contents)
     old_hash=$(cat $PREFIX/tmp/refresh/digest)
