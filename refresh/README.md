@@ -4,23 +4,27 @@
 This script will simulate pressing ctrl+shift+r in firefox, when you're in a development server. Usefull if you're writing html css and js in vim.
 
 You need to  make sure you have: 
-- `python3`. => for the http.server module.
-- `firefox`. => the browser.
-- `xdotool`. => for sending keypresses to firefox.
+- `bash`.
+- `python3`.
+- `firefox`.
+- `xdotool`.
 
 I initially tried using it with the Brave browser, but `xdotool` wouldn't pick up the right window, so I switched to Firefox instead. 
+
 It may be a problem with my OS and not with `xdotool`, but I don't currently have the time to look into exactly why it doesn't work for me.
+
 No issues with Firefox so far. 
 
-Im using regular vim as my text editor(VIM Version 9.1), adding the following in my `.vimrc` will make it so you don't have to keep saving your work everytime to trigger the reload.
+On Desktop I'm using regular vim as my text editor(VIM Version 9.1), adding the following in your `.vimrc` will make it so you don't have to keep saving your work everytime to trigger the reload.
 - `autocmd InsertLeave,TextChanged,InsertChange * silent! wa` to simulate autosaving.
 > Note: Sometimes it can play up, so you can try different options or just revert back to manually saving your work.
 
 The script monitors whatever directory you call it from. It looks for an "index" file and then hashes the contents of your directory to keep track of any changes. 
 
 Any change in the directory will trigger the reload of the browser. You can adjust how often the script checks for a change in your directory by adjusting the sleep parameter in the `hash_check` function.
-### How to use
+
 ---
+### How to use
 I recommed you create an `alias` to the script which you can then call from anywhere in your bash terminal.
 I created one called:
 - 'devstart="~/git/tools/refresh/refresh.sh"' 
