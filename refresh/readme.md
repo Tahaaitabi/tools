@@ -6,6 +6,7 @@ It's pretty crude but it does what I need it to, which is to provide me with a s
 
 You need to  make sure you have: 
     - `python3`. => for the http.server module.
+    - `firefox`. => the browser.
     - `xdotool`. => for sending keypresses to firefox.
 
 I'm running it on a barebones arch system with DWM (Dynamic Window Manager) as the window manager. 
