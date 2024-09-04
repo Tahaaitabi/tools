@@ -1,6 +1,4 @@
-
 read -p "Choose a port: " port
-
 function open {
   if ls "index."* &> /dev/null; then
     python3 -m http.server "$port" &
@@ -8,10 +6,12 @@ function open {
     sleep 1
     firefox --new-window "http://localhost:$port" &
     browser_pid=$!
-    sleep 2  # Give some time for the browser to open
-    ff_clear_cache
+    sleep 2
+    xdotool search --name "Firefox" key ctrl+shift+r
+    sleep 3  # Give some time for the browser to open
     init_check
     hash_check
+    ff_clear_cache
   else
     echo "No index detected. Please create one and try again."
   fi
@@ -42,6 +42,4 @@ function hash_check {
     fi
   done
 }
-
 open
-
