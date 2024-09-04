@@ -49,7 +49,11 @@ Choose a port to work with; I usually go with port 3000.
 >**MAKE SURE YOU SET IT!!**
 
 Once you're done with the server, you need to close it in order to liberate that port or it will remain open.
+
 I usually just run a `pgrep python3` to get the PID and then I kill it. 
-That's it. An extremely light, simple and faff free way to live view your code in the browser.
+
+That's it! 
+
+An extremely light, simple and faff free way to live view your code in the browser, enjoy!
 
 **If you're using TERMUX on Android use the version `termux-refresh.sh`**
