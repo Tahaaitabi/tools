@@ -1,38 +1,37 @@
 read -p "Choose a port: " port
 function open {
-  if ls "index."* &> /dev/null; then
+  #if ls "index."* &> /dev/null; then
+  if [ $(find * -name "index."*) ]; then
     python3 -m http.server "$port" &
     server_pid=$!
     sleep 1
     firefox --new-window "http://localhost:$port" &
     browser_pid=$!
-    sleep 2
-    xdotool search --name "Firefox" key ctrl+shift+r
-    sleep 3  # Give some time for the browser to open
+    sleep 2  # Give some time for the browser to open
+    ff_clear_cache
     init_check
     hash_check
-    ff_clear_cache
   else
     echo "No index detected. Please create one and try again."
   fi
 }
 
 function ff_clear_cache {
-  title_tag=$(grep -m 1 -i '<title>' ./index.* | awk -F '[</>]' '{print $3}')
+  title_tag=$(find * -name "index.*" | awk '{print "grep -m 1 title "$0}' | $SHELL | awk -F "[</>]" '{print $3}')
   clear_cache="ctrl+shift+r"
   xdotool search --name "$title_tag" key "$clear_cache"
 }
 
 function init_check {
   mkdir -p $PREFIX/tmp/refresh/
-  ls -lahR > $PREFIX/tmp/refresh/contents
-  md5sum $PREFIX/tmp/refresh/contents > $PREFIX/tmp/refresh/digest
+  find . -type f ! -name "*.swp" ! -path "./.git/*" | awk '{print "cat "$0}' | $SHELL  > $PREFIX/tmp/refresh/contents
+  md5sum $PREFIX/tmp/refresh/contents > /$PREFIX/tmp/refresh/digest
 }
 
 function hash_check {
   while true; do 
-    sleep 0.3 # Add a delay between checks to prevent high CPU usage
-    ls -lahR > $PREFIX/tmp/refresh/contents 
+    #sleep 1  # Add a delay between checks to prevent high CPU usage
+    find .  -type f ! -name "*.swp" ! -path "./.git/*" | awk '{print "cat "$0}' | $SHELL > $PREFIX/tmp/refresh/contents 
     new_hash=$(md5sum $PREFIX/tmp/refresh/contents)
     old_hash=$(cat $PREFIX/tmp/refresh/digest)
 
@@ -42,4 +41,5 @@ function hash_check {
     fi
   done
 }
+
 open
